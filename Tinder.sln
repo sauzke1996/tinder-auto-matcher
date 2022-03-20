@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tinder", "Tinder\Tinder.csproj", "{80D97269-424B-4CF5-BB1A-C3029450390C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tinder", "Tinder\Tinder.csproj", "{80D97269-424B-4CF5-BB1A-C3029450390C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tinder.AutoMatcher", "Tinder.AutoMatcher\Tinder.AutoMatcher.csproj", "{113E4B79-2FB4-4C05-A2E9-4E36875C87C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tinder.AutoMatcher", "Tinder.AutoMatcher\Tinder.AutoMatcher.csproj", "{113E4B79-2FB4-4C05-A2E9-4E36875C87C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tinder.AutoSwipper", "Tinder.AutoSwipper\Tinder.AutoSwipper.csproj", "{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{80D97269-424B-4CF5-BB1A-C3029450390C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,5 +43,23 @@ Global
 		{113E4B79-2FB4-4C05-A2E9-4E36875C87C8}.Release|x64.Build.0 = Release|Any CPU
 		{113E4B79-2FB4-4C05-A2E9-4E36875C87C8}.Release|x86.ActiveCfg = Release|Any CPU
 		{113E4B79-2FB4-4C05-A2E9-4E36875C87C8}.Release|x86.Build.0 = Release|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Debug|x64.Build.0 = Debug|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Debug|x86.Build.0 = Debug|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Release|x64.ActiveCfg = Release|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Release|x64.Build.0 = Release|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Release|x86.ActiveCfg = Release|Any CPU
+		{87FB3BCD-9E94-4E9D-A053-B53DD2AA981C}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8EF830A2-1B89-4168-B9F4-641DA5027BD0}
 	EndGlobalSection
 EndGlobal

@@ -69,6 +69,7 @@ namespace Tinder.AutoMatcher
             {
                 matchOccuredInSet = false;
                 var recs = await GetRecommendations(cancellationToken);
+                _logger.LogDebug($"{recs.Count} Recs found");
                 foreach (var rec in recs)
                 {
                     if (rec.UserInfo.Photos.Any(photo => teaserPhotoIds.Contains(photo.Id)))

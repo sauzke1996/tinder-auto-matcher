@@ -142,24 +142,20 @@ namespace Tinder
             var res = await _httpClient.SendAsync(msg, cancellationToken);
             var json = await res.Content.ReadAsStringAsync();
 
-            if (!res.IsSuccessStatusCode)
-            {
-                if (res.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    throw new TinderAuthenticationException("Invalid or expired token");
-                }
-
-                throw new TinderException(json);
-            }
-
-            return Deserialize<TResponse>(json);
-        }
-
-        private T Deserialize<T>(string json)
-        {
             try
             {
-                return JsonSerializer.Deserialize<T>(json);
+                if (!res.IsSuccessStatusCode)
+                {
+                    if (res.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        throw new TinderAuthenticationException("Invalid or expired token");
+                    }
+
+                    throw new TinderException(json);
+                }
+
+                return JsonSerializer.Deserialize<TResponse>(json) 
+                    ?? throw new JsonException($"Couldn't deserialize response: ${json}");
             }
             catch (Exception e)
             {
