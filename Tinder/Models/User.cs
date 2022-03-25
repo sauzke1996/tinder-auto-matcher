@@ -28,6 +28,9 @@ namespace Tinder.Models
         public IReadOnlyList<Company> Companies { get; set; } = default!;
         [JsonPropertyName("jobs")]
         public IReadOnlyList<Job> Jobs { get; set; } = default!;
+        [JsonPropertyName("selected_descriptors")]
+        public IReadOnlyList<Descriptor> SelectedDescriptors { get; set; } = default!;        
+
 
         public enum Gender
         {
@@ -51,7 +54,7 @@ namespace Tinder.Models
         {
             [JsonPropertyName("company")]
             public Company Company { get; set; } = default!;
-        }
+        }        
     }
 
     public class UserRecommendation : UserProfile

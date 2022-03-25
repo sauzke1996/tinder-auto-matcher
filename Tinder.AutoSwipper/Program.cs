@@ -3,12 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Tinder.Scoring;
 
 namespace Tinder.AutoSwipper
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             IConfiguration config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
@@ -29,11 +30,12 @@ namespace Tinder.AutoSwipper
                     .AddConsole()
                     .AddDebug())
                 .AddSingleton<ITinderClient>(tinderClient)
+                .AddSingleton<IScoring, ScoringAgent>()
                 .AddTransient<AutoSwipper>()
                 .BuildServiceProvider();
 
             var autoSwipper = serviceProvider.GetService<AutoSwipper>();
-            Task.Run(() => autoSwipper.ExecuteAsync()).Wait();
+            await autoSwipper.ExecuteAsync();
         }
     }
 }

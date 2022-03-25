@@ -99,7 +99,7 @@ namespace Tinder
 
         public async Task<Profile> GetProfile(CancellationToken cancellationToken = default)
         {
-            var res = await Get<ProfileResponse>("profile", cancellationToken);
+            var res = await Get<ProfileResponse>("v2/profile?locale=en&include=email_settings%2Clikes%2Cuser", cancellationToken);
             return res.Profile;
         }
 

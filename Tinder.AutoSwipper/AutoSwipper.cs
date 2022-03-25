@@ -7,17 +7,22 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Tinder.Models;
+using Tinder.Scoring;
 
 namespace Tinder.AutoSwipper
 {
     public class AutoSwipper
     {
-        private readonly ITinderClient _client;
-        private readonly ILogger<Program> _logger;
+        private const int MIN_SCORE = 0;
 
-        public AutoSwipper(ITinderClient tinderClient, ILogger<Program> logger)
+        private readonly ILogger<Program> _logger;        
+        private readonly ITinderClient _client;
+        private readonly IScoring _scoring;        
+
+        public AutoSwipper(ITinderClient tinderClient, IScoring scoring, ILogger<Program> logger)
         {
             _client = tinderClient;
+            _scoring = scoring;
             _logger = logger;
         }
 
@@ -25,8 +30,9 @@ namespace Tinder.AutoSwipper
         {
             try
             {
-                await MatchRecommendations(cancellationToken);
                 await MatchTeasedRecommendations(cancellationToken);
+                var profile = await _client.GetProfile(cancellationToken);
+                await MatchRecommendations(profile.LikesInfo.LikesRemaining, cancellationToken);                
             }
             catch (Exception e)
             {
@@ -34,18 +40,37 @@ namespace Tinder.AutoSwipper
             }
         }
 
-        private async Task MatchRecommendations(CancellationToken cancellationToken)
+        private async Task MatchRecommendations(int matchesRemaining,CancellationToken cancellationToken)
         {
             var recs = await GetRecommendations(cancellationToken);
+                
             _logger.LogInformation($"{recs.Count} Recommendations");
 
+            var matchCount = matchesRemaining;
             foreach (var rec in recs)
             {
-                var like = await _client.Like(rec.UserInfo.Id, cancellationToken);
-                if (like.Match != null)
-                    _logger.LogInformation("You matched " + rec.UserInfo.Name);
+                var score = _scoring.Score(rec);
+                if (score >= MIN_SCORE)
+                {
+
+                    var like = await _client.Like(rec.UserInfo.Id, cancellationToken);
+                    if (like.Match != null)
+                        _logger.LogInformation($"You matched {rec.UserInfo.Name} with score {score}");
+                    else
+                        _logger.LogError($"{rec.UserInfo.Name} ({rec.UserInfo.Id}) was not a match with score {score}");
+
+                    matchCount--;
+                }
                 else
-                    _logger.LogError($"{rec.UserInfo.Name} ({rec.UserInfo.Id}) was not a match");
+                {
+                    await _client.Pass(rec.UserInfo.Id, cancellationToken);
+                    _logger.LogError($"Passed {rec.UserInfo.Name} ({rec.UserInfo.Id}) with score {score}");
+                }
+
+                if (matchCount == 0)
+                {
+                    break;
+                }
             }
         }
 
@@ -67,7 +92,7 @@ namespace Tinder.AutoSwipper
         private async Task<IReadOnlyList<Recommendation>> GetRecommendations(CancellationToken cancellationToken)
         {
             return await _client.GetRecommendations(cancellationToken) 
-                ?? new List<Recommendation>();
+                ?? new List<Recommendation>();            
         }
 
         private async Task<ISet<string>> GetTeaserPhotoIds(CancellationToken cancellationToken)

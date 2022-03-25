@@ -45,7 +45,8 @@ namespace Tinder.Models
         public Teaser TeaserInfo { get; set; } = default!;
         [JsonPropertyName("teasers")]
         public IReadOnlyList<Teaser> Teasers { get; set; } = default!;
-
+        [JsonPropertyName("experiment_info")]
+        public ExperimentInformation ExperimentInfo { get; set; } = default!;
         public class Spotify
         {
             [JsonPropertyName("spotify_connected")]
@@ -105,6 +106,18 @@ namespace Tinder.Models
             [JsonPropertyName("string")]
             public string String { get; set; } = default!;
 
+        }
+
+        public class ExperimentInformation
+        {
+            [JsonPropertyName("user_interests")]
+            public UserInterest UserInterest { get; set; } = default!;
+        }
+
+        public class UserInterest
+        {
+            [JsonPropertyName("selected_interests")]
+            public IReadOnlyList<Interest> SelectedInterests { get; set; } = default!;
         }
     }
 }

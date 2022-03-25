@@ -16,22 +16,22 @@ namespace Tinder.Models
     {
         [JsonPropertyName("likes")]
         public Likes LikesInfo { get; set; } = default!;
-        [JsonPropertyName("account")]
-        public Account AccountInfo { get; set; } = default!;
-        [JsonPropertyName("email")]
+        //[JsonPropertyName("account")]
+        //public Account AccountInfo { get; set; } = default!;
+        [JsonPropertyName("email_settings")]
         public Email EmailInfo { get; set; } = default!;
-        [JsonPropertyName("boost")]
-        public Boost BoostInfo { get; set; } = default!;
-        [JsonPropertyName("plus_control")]
-        public PlusControl PlusControlInfo { get; set; } = default!;
-        [JsonPropertyName("products")]
-        public Product ProductsInfo { get; set; } = default!;
+        //[JsonPropertyName("boost")]
+        //public Boost BoostInfo { get; set; } = default!;
+        //[JsonPropertyName("plus_control")]
+        //public PlusControl PlusControlInfo { get; set; } = default!;
+        //[JsonPropertyName("products")]
+        //public Product ProductsInfo { get; set; } = default!;
         [JsonPropertyName("user")]
         public UserSelf User { get; set; } = default!;
-        [JsonPropertyName("instagram")]
-        public Instagram InstagramInfo { get; set; } = default!;
-        [JsonPropertyName("contact_cards")]
-        public ContactCards ContactCardsInfo { get; set; } = default!;
+        //[JsonPropertyName("instagram")]
+        //public Instagram InstagramInfo { get; set; } = default!;
+        //[JsonPropertyName("contact_cards")]
+        //public ContactCards ContactCardsInfo { get; set; } = default!;
 
         public class Likes
         {
