@@ -56,6 +56,7 @@ namespace Tinder.Scoring
             "DnD",
             "Dungeons and Dragons",
             "LOTR",
+            "lord of the rings",
             "PCMasterRace",
             "nerdy",
             "Coding"

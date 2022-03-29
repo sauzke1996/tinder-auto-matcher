@@ -42,7 +42,8 @@ namespace Tinder.AutoSwipper
         private async Task MatchRecommendations(CancellationToken cancellationToken)
         {
             var recs = await GetRecommendations(cancellationToken);
-            while (recs != null && recs.Any())
+            int likesRemaining = 1;
+            while (recs != null && recs.Any() && likesRemaining > 0)
             {
                 _logger.LogInformation($"{recs.Count} Recommendations");
                 
@@ -57,10 +58,12 @@ namespace Tinder.AutoSwipper
                         else
                             _logger.LogInformation($"{rec.UserInfo.Name} ({rec.UserInfo.Id}) was not a match with score {score}");
 
-                        if(like.LikesRemaining <= 0)
+                        likesRemaining = like.LikesRemaining;
+                        if (likesRemaining <= 0)
                         {
                             _logger.LogInformation($"{like.LikesRemaining} Likes remaining");
-                        }    
+                            break;
+                        }
                     }
                     else
                     {
