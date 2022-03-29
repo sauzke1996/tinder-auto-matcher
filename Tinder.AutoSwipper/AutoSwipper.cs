@@ -31,8 +31,7 @@ namespace Tinder.AutoSwipper
             try
             {
                 await MatchTeasedRecommendations(cancellationToken);
-                var profile = await _client.GetProfile(cancellationToken);
-                await MatchRecommendations(profile.LikesInfo.LikesRemaining, cancellationToken);                
+                await MatchRecommendations(cancellationToken);                
             }
             catch (Exception e)
             {
@@ -40,37 +39,36 @@ namespace Tinder.AutoSwipper
             }
         }
 
-        private async Task MatchRecommendations(int matchesRemaining,CancellationToken cancellationToken)
+        private async Task MatchRecommendations(CancellationToken cancellationToken)
         {
             var recs = await GetRecommendations(cancellationToken);
-                
-            _logger.LogInformation($"{recs.Count} Recommendations");
-
-            var matchCount = matchesRemaining;
-            foreach (var rec in recs)
+            while (recs != null && recs.Any())
             {
-                var score = _scoring.Score(rec);
-                if (score >= MIN_SCORE)
+                _logger.LogInformation($"{recs.Count} Recommendations");
+                
+                foreach (var rec in recs)
                 {
+                    var score = _scoring.Score(rec);
+                    if (score >= MIN_SCORE)
+                    {
+                        var like = await _client.Like(rec.UserInfo.Id, cancellationToken);
+                        if (like.Match != null)
+                            _logger.LogInformation($"You matched {rec.UserInfo.Name} with score {score}");
+                        else
+                            _logger.LogInformation($"{rec.UserInfo.Name} ({rec.UserInfo.Id}) was not a match with score {score}");
 
-                    var like = await _client.Like(rec.UserInfo.Id, cancellationToken);
-                    if (like.Match != null)
-                        _logger.LogInformation($"You matched {rec.UserInfo.Name} with score {score}");
+                        if(like.LikesRemaining <= 0)
+                        {
+                            _logger.LogInformation($"{like.LikesRemaining} Likes remaining");
+                        }    
+                    }
                     else
-                        _logger.LogError($"{rec.UserInfo.Name} ({rec.UserInfo.Id}) was not a match with score {score}");
-
-                    matchCount--;
+                    {
+                        await _client.Pass(rec.UserInfo.Id, cancellationToken);
+                        _logger.LogError($"Passed {rec.UserInfo.Name} ({rec.UserInfo.Id}) with score {score}");
+                    }
                 }
-                else
-                {
-                    await _client.Pass(rec.UserInfo.Id, cancellationToken);
-                    _logger.LogError($"Passed {rec.UserInfo.Name} ({rec.UserInfo.Id}) with score {score}");
-                }
-
-                if (matchCount == 0)
-                {
-                    break;
-                }
+                recs = await GetRecommendations(cancellationToken);
             }
         }
 

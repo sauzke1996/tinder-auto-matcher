@@ -12,6 +12,9 @@ namespace Tinder
 {
     public class TinderClient : ITinderClient
     {
+        public const string BINGE_WATCHER = "cl_JAyTf";
+        public const string GAMING = "cl_7wOvt";
+
         private readonly HttpClient _httpClient;
 
         public TinderClient(Guid authToken)
@@ -29,6 +32,12 @@ namespace Tinder
         public async Task<IReadOnlyList<Recommendation>?> GetRecommendations(CancellationToken cancellationToken = default)
         {
             var res = await Get<RecommendationResponse>("v2/recs/core", cancellationToken);
+            return res.Data.Results;
+        }
+
+        public async Task<IReadOnlyList<Recommendation>?> Explore(string category = GAMING, CancellationToken cancellationToken = default)
+        {
+            var res = await Get<RecommendationResponse>($"v2/explore/recs?locale=en&catalog_id={category}", cancellationToken);
             return res.Data.Results;
         }
 

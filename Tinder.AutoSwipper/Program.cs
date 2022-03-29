@@ -36,6 +36,9 @@ namespace Tinder.AutoSwipper
 
             var autoSwipper = serviceProvider.GetService<AutoSwipper>();
             await autoSwipper.ExecuteAsync();
+
+            Console.WriteLine("Press any key to exit ...");
+            Console.ReadLine();
         }
     }
 }

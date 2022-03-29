@@ -34,6 +34,8 @@ namespace Tinder
         /// </summary>
         Task<IReadOnlyList<Recommendation>?> GetRecommendations(CancellationToken cancellationToken = default);
 
+        Task<IReadOnlyList<Recommendation>?> Explore(string category, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// Get teaser preview (number of people who liked you + last person who liked you).
         /// </summary>

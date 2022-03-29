@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Tinder.Models;
 
+using static Tinder.Scoring.TagDictionary;
+
 namespace Tinder.Scoring
 {
     public class ScoringAgent : IScoring
@@ -11,80 +13,13 @@ namespace Tinder.Scoring
         private const int MAX_DISTANCE_MI = 16;
         private const int MIN_PHOTO_COUNT = 2;
 
-        private readonly string[] SuperLikeInterests = new string[]
-        {
-            "Gamer",
-            "Gaming",
-            "Movies",
-            "Netflix",
-            "Esports"
-        };
-
-        private readonly string[] LikeInterests = new string[]
-        {
-            "Cycling",
-            "BoardGames",
-            "Coffee",
-            "Politics",
-            "Walking",
-            "Travel"
-        };
-
-        private readonly string[] DislikeInterests = new string[]
-        {
-            "Soccer",
-            "Cat Lover",
-            "Language Exchange",
-            "Running",
-            "Plant-Based",
-            "Astrology",
-            "Outdoors"
-        };
-
-        private readonly string[] LolNope = new string[]
-        {
-            "Athlete",
-            "Sports",
-            "Golf",
-            "Soccer"
-        };
-
-        private readonly string[] LikeBio = new string[]
-        {
-            "Games",
-            "Anime",
-            "Marvel",
-            "DC",
-            "Nerd",
-            "Star Wars",
-            "DnD"
-        };
-
-        private readonly string[] LolNopeBio = new string[]
-        {
-            "Active",
-            "Outdoors",
-            "Just visiting",
-            "Here for a good time not a long time",
-            "420 Friendly",
-            "Acab",
-            "Fuck the police",
-            "Polyamorous",
-            "Just friends",
-            "Non-monogamous",
-            "Non monogamous",
-            "Nothing serious",
-            "Single mom",
-            "Communist",
-            "eat the rich"
-        };
-
         public int Score(Recommendation recommendation)
         {
             int score = 0;
             if (recommendation.DistanceMi > MAX_DISTANCE_MI)
-                score -= 100;
+                score -= 15;
 
+            //tags
             if (recommendation.ExperimentInfo?.UserInterest?.SelectedInterests != null)
             {
                 score += (recommendation.ExperimentInfo.UserInterest.SelectedInterests
@@ -101,8 +36,9 @@ namespace Tinder.Scoring
             }
 
             if (recommendation.UserInfo.Photos.Count < MIN_PHOTO_COUNT)
-                score--;
+                score -= 6;
 
+            //bio
             score += SuperLikeInterests.Count(i => recommendation.UserInfo.Bio.Contains(i, StringComparison.InvariantCultureIgnoreCase));
             score += LikeBio.Count(i => recommendation.UserInfo.Bio.Contains(i, StringComparison.InvariantCultureIgnoreCase));
 
