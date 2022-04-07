@@ -78,7 +78,7 @@ namespace Tinder.AutoSwipper
         private async Task MatchTeasedRecommendations(CancellationToken cancellationToken)
         {
             ISet<string> teaserPhotoIds = await GetTeaserPhotoIds(cancellationToken);
-            _logger.LogDebug($"{teaserPhotoIds.Count} people liked you");
+            _logger.LogInformation($"{teaserPhotoIds.Count} people liked you");
 
             await foreach (var teasedRec in GetTeasedRecommendations(teaserPhotoIds, cancellationToken))
             {

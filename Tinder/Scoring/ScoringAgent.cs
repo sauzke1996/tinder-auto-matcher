@@ -17,7 +17,7 @@ namespace Tinder.Scoring
         {
             int score = 0;
             if (recommendation.DistanceMi > MAX_DISTANCE_MI)
-                score -= 15;
+                score -= recommendation.DistanceMi/MAX_DISTANCE_MI;
 
             //tags
             if (recommendation.ExperimentInfo?.UserInterest?.SelectedInterests != null)
