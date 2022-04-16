@@ -16,6 +16,12 @@ namespace Tinder.Scoring
         public int Score(Recommendation recommendation)
         {
             int score = 0;
+
+            if (recommendation.UserInfo.GenderInfo == UserProfile.Gender.Male)
+            {
+                return -999;
+            }
+
             if (recommendation.DistanceMi > MAX_DISTANCE_MI)
                 score -= recommendation.DistanceMi/MAX_DISTANCE_MI;
 
