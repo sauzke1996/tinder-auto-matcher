@@ -33,7 +33,7 @@ namespace Tinder.AutoSwipper
 
         private async Task MatchRecommendations(CancellationToken cancellationToken)
         {
-            var recs = await GetRecommendations(cancellationToken);
+            var recs = await GetRecommendations(true, cancellationToken);
 
             ISet<string> teaserPhotoIds = await GetTeaserPhotoIds(cancellationToken);
             _logger.LogInformation($"{teaserPhotoIds.Count} people liked you");
@@ -70,7 +70,7 @@ namespace Tinder.AutoSwipper
                         _logger.LogError($"Passed {rec.UserInfo.Name} ({rec.UserInfo.Id}) with score {score}");
                     }
                 }
-                recs = await GetRecommendations(cancellationToken);
+                recs = await GetRecommendations(true, cancellationToken);
             }
         }
 
@@ -92,9 +92,10 @@ namespace Tinder.AutoSwipper
             }
         }
 
-        private async Task<IReadOnlyList<Recommendation>> GetRecommendations(CancellationToken cancellationToken)
+        private async Task<IReadOnlyList<Recommendation>> GetRecommendations(bool explore = false,  CancellationToken cancellationToken = default)
         {
-            return await _client.GetRecommendations(cancellationToken) 
+            return explore ? await _client.Explore(TinderClient.GAMING, cancellationToken) :
+                await _client.GetRecommendations(cancellationToken) 
                 ?? new List<Recommendation>();            
         }
 
