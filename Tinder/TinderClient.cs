@@ -24,9 +24,9 @@ namespace Tinder
                 BaseAddress = new Uri("https://api.gotinder.com/"),
             };
 
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", "Tinder/7.5.3 (iPhone; iOS 10.3.2; Scale/2.00)");
-            _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            _httpClient.DefaultRequestHeaders.Add("X-Auth-Token", authToken.ToString());
+            _httpClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36");
+            _httpClient.DefaultRequestHeaders.Add("accept", "application/json");
+            _httpClient.DefaultRequestHeaders.Add("x-auth-token", authToken.ToString());
         }
 
         public async Task<IReadOnlyList<Recommendation>?> GetRecommendations(CancellationToken cancellationToken = default)
