@@ -6,6 +6,7 @@ namespace Tinder.AutoSwipper
 {
     public class AutoSwipper
     {
+        private const bool GET_RECOMMENDATIONS = true;
         private const int MIN_SCORE = 0;
 
         private readonly ILogger<Program> _logger;        
@@ -33,7 +34,7 @@ namespace Tinder.AutoSwipper
 
         private async Task MatchRecommendations(CancellationToken cancellationToken)
         {
-            var recs = await GetRecommendations(true, cancellationToken);
+            var recs = await GetRecommendations(GET_RECOMMENDATIONS, cancellationToken);
 
             ISet<string> teaserPhotoIds = await GetTeaserPhotoIds(cancellationToken);
             _logger.LogInformation($"{teaserPhotoIds.Count} people liked you");
@@ -53,14 +54,14 @@ namespace Tinder.AutoSwipper
                     {
                         var like = await _client.Like(rec.UserInfo.Id, cancellationToken);
                         if (like.Match != null)
-                            _logger.LogInformation($"You Matched {rec.UserInfo.Name} with score {score}");
+                            _logger.LogInformation($"You Matched {rec.UserInfo.Name} with score {score} - {rec.UserInfo.Bio}");
                         else
                             _logger.LogInformation($"{rec.UserInfo.Name} ({rec.UserInfo.Id}) was not a match with score {score}");
 
                         likesRemaining = like.LikesRemaining > 0;
                         if (!likesRemaining)
                         {
-                            _logger.LogInformation($"{like.LikesRemaining} Likes remaining");                            
+                            _logger.LogInformation($"{like.LikesRemaining} Likes remaining");                        
                             break;
                         }
                     }
@@ -70,7 +71,7 @@ namespace Tinder.AutoSwipper
                         _logger.LogError($"Passed {rec.UserInfo.Name} ({rec.UserInfo.Id}) with score {score}");
                     }
                 }
-                recs = await GetRecommendations(true, cancellationToken);
+                recs = await GetRecommendations(GET_RECOMMENDATIONS, cancellationToken);
             }
         }
 
