@@ -23,7 +23,10 @@ namespace Tinder.Scoring
             "Coffee",
             "Politics",
             "Walking",
-            "Travel"
+            "Travel",
+            "Memes",
+            "Binge-Watching TV shows",
+            "Dungeons & Dragons"
         };
 
         internal static readonly string[] DislikeInterests = new string[]
@@ -54,6 +57,7 @@ namespace Tinder.Scoring
             "Nerd",
             "Star Wars",
             "DnD",
+            "D&D",
             "Dungeons and Dragons",
             "LOTR",
             "lord of the rings",
