@@ -17,7 +17,7 @@ namespace Tinder.Models
         [JsonPropertyName("bio")]
         public string Bio { get; set; } = default!;
         [JsonPropertyName("birth_date")]
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         [JsonPropertyName("name")]
         public string Name { get; set; } = default!;
         [JsonPropertyName("gender")]
