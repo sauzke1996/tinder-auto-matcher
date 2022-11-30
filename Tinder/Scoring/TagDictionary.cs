@@ -84,6 +84,7 @@ namespace Tinder.Scoring
             "Single mom",
             "Communist",
             "eat the rich",
+            "gym junkie"
         };
     }
 }
