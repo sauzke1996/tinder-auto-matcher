@@ -56,7 +56,7 @@ namespace Tinder.AutoSwipper
                         if (like.Match != null)
                             _logger.LogInformation($"You Matched {rec.UserInfo.Name} with score {score} - {rec.UserInfo.Bio}");
                         else
-                            _logger.LogInformation($"{rec.UserInfo.Name} ({rec.UserInfo.Id}) was not a match with score {score}");
+                            _logger.LogInformation($"{rec.UserInfo.Name} ({rec.UserInfo.Bio}) was not a match with score {score}");
 
                         likesRemaining = like.LikesRemaining > 0;
                         if (!likesRemaining)
@@ -68,7 +68,7 @@ namespace Tinder.AutoSwipper
                     else
                     {
                         await _client.Pass(rec.UserInfo.Id, cancellationToken);
-                        _logger.LogError($"Passed {rec.UserInfo.Name} ({rec.UserInfo.Id}) with score {score}");
+                        _logger.LogError($"Passed {rec.UserInfo.Name} ({rec.UserInfo.Bio}) with score {score}");
                     }
                 }
                 recs = await GetRecommendations(GET_RECOMMENDATIONS, cancellationToken);
