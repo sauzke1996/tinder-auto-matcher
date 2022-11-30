@@ -22,6 +22,12 @@ namespace Tinder.Scoring
                 return -999;
             }
 
+            if(recommendation.UserInfo.BirthDate.HasValue &&
+                (recommendation.UserInfo.BirthDate.Value.Year > 2000 || recommendation.UserInfo.BirthDate.Value.Year < 1987))
+            {
+                score -= 10;
+            }
+
             if (recommendation.DistanceMi > MAX_DISTANCE_MI)
                 score -= recommendation.DistanceMi/MAX_DISTANCE_MI;
 
