@@ -9,6 +9,10 @@ namespace Tinder.Models
     {
         [JsonPropertyName("name")]
         public string Name { get; set; } = default!;
+
+        [JsonPropertyName("prompt")]
+        public string Prompt { get; set; } = default!;
+
         [JsonPropertyName("choice_selections")]
         public IReadOnlyList<Selection> ChoiceSelections { get; set; } = default!;
 

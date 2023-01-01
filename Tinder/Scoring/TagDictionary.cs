@@ -26,7 +26,8 @@ namespace Tinder.Scoring
             "Travel",
             "Memes",
             "Binge-Watching TV shows",
-            "Dungeons & Dragons"
+            "Dungeons & Dragons",
+            "Sushi"
         };
 
         internal static readonly string[] DislikeInterests = new string[]
@@ -37,7 +38,9 @@ namespace Tinder.Scoring
             "Running",
             "Plant-Based",
             "Astrology",
-            "Outdoors"
+            "Outdoors",
+            "Martial Arts",
+            "Social Media"
         };
 
         internal static readonly string[] LolNope = new string[]
@@ -63,7 +66,8 @@ namespace Tinder.Scoring
             "lord of the rings",
             "PCMasterRace",
             "nerdy",
-            "Coding"
+            "Coding",
+            "Introvert"
         };
 
         internal static readonly string[] LolNopeBio = new string[]
@@ -84,7 +88,9 @@ namespace Tinder.Scoring
             "Single mom",
             "Communist",
             "eat the rich",
-            "gym junkie"
+            "gym junkie",
+            "stealing from walmart",
+            "Poly/ENM"
         };
     }
 }

@@ -47,6 +47,11 @@ namespace Tinder.Scoring
                     .Count(i => LolNope.Any(l => l.Equals(i.Name, StringComparison.InvariantCultureIgnoreCase))) * 3);
             }
 
+            // Descriptors
+            score += ScoreFamilyPlans(recommendation.UserInfo);
+            score += ScoreSmoking(recommendation.UserInfo);
+
+            // Photos
             if (recommendation.UserInfo.Photos.Count < MIN_PHOTO_COUNT)
                 score -= 6;
 
@@ -57,6 +62,32 @@ namespace Tinder.Scoring
             score -= (LolNopeBio.Count(i => recommendation.UserInfo.Bio.Contains(i, StringComparison.InvariantCultureIgnoreCase)) * 5);
 
             return score;
+        }
+
+        private int ScoreFamilyPlans(UserRecommendation recommendation)
+        {
+            var familyPlans = recommendation?.SelectedDescriptors?.FirstOrDefault(d => d.Name.Equals("Family Plans", StringComparison.InvariantCultureIgnoreCase));
+
+            if (familyPlans == null)
+                return 0;
+
+            if (familyPlans.ChoiceSelections.Any(s => s.Name.Equals("I want children", StringComparison.InvariantCultureIgnoreCase)))
+                return -20;
+
+            return 1;
+        }
+
+        private int ScoreSmoking(UserRecommendation recommendation)
+        {
+            var smoking = recommendation?.SelectedDescriptors?.FirstOrDefault(d => d.Name.Equals("Smoking", StringComparison.InvariantCultureIgnoreCase));
+
+            if (smoking == null)
+                return 0;
+
+            if (smoking.ChoiceSelections.Any(s => s.Name.Equals("Non-smoker", StringComparison.InvariantCultureIgnoreCase)))
+                return 1;
+
+            return -10;
         }
     }
 }

@@ -63,6 +63,10 @@ namespace Tinder.Models
         public bool ShowGenderOnProfile { get; set; }
         [JsonPropertyName("new_user_badge_enabled")]
         public bool NewUserBadgeEnabled { get; set; }
+        [JsonPropertyName("recently_active")]
+        public bool RecentlyActive { get; set; }
+        [JsonPropertyName("relationship_intent")]
+        public RelationshipIntent RelationshipIntent { get; set; } = default!;
     }
 
     public class UserSelf : UserRecommendation
